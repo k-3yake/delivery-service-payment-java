@@ -1,0 +1,23 @@
+FROM k3yake/dsp-local-dependencies-activator
+MAINTAINER Katsuki Miyake <3katsu3hiro@gmail.com>
+
+#Install supervisor
+RUN apt-get update && apt-get install -y supervisor
+RUN mkdir -p /var/log/supervisor
+
+#Install Git
+RUN apt-get -y install git=1:1.9.1-1ubuntu0.1
+
+#Inatall Git Repository
+VOLUME /home/repository
+
+#Install Jenkins
+RUN mkdir -p /home/jenkins/jenkins_home && cd /home/jenkins && wget https://updates.jenkins-ci.org/download/war/1.602/jenkins.war
+ENV JENKINS_HOME=/home/jenkins/jenkins_home
+VOLUME /home/jenkins/jenkins_home
+
+EXPOSE 8080
+
+#RUN Services
+COPY servers/ci/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+CMD ["/usr/bin/supervisord","-n"]

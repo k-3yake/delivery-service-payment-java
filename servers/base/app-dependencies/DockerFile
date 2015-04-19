@@ -1,0 +1,14 @@
+FROM k3yake/dsp-base
+MAINTAINER Katsuki Miyake <3katsu3hiro@gmail.com>
+
+#Install Utility
+RUN apt-get update && apt-get install -y unzip
+
+# Gradle
+WORKDIR /usr/bin
+RUN wget https://services.gradle.org/distributions/gradle-2.2.1-all.zip && \
+    unzip gradle-2.2.1-all.zip && \
+    ln -s gradle-2.2.1 gradle && \
+    rm gradle-2.2.1-all.zip
+ENV GRADLE_HOME /usr/bin/gradle
+ENV PATH $PATH:$GRADLE_HOME/bin

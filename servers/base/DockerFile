@@ -1,0 +1,17 @@
+FROM ubuntu:14.04
+MAINTAINER Katsuki Miyake <3katsu3hiro@gmail.com>
+
+#Change sh to bash
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+
+#Install Utility
+RUN apt-get update && apt-get install -y software-properties-common python-software-properties
+
+#Install Java8
+RUN \
+  echo oracle-java8-installer shared/accepted-oracle-license-v1-1 select true | debconf-set-selections && \
+  add-apt-repository -y ppa:webupd8team/java && \
+  apt-get update && \
+  apt-get install -y oracle-java8-installer && \
+  rm -rf /var/lib/apt/lists/* && \
+  rm -rf /var/cache/oracle-jdk8-installer

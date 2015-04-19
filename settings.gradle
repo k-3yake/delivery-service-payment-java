@@ -1,0 +1,6 @@
+rootProject.name = 'delivery-service-payment-java'
+
+include 'servers'
+
+include 'front'
+
